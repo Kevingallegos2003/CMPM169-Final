@@ -3,17 +3,19 @@ class Gallery extends Phaser.Scene {
         super("GalleryScene");
         this.my = {sprite: {}};
     }
+
     preload(){
-                //  Load body shape from JSON file generated using the editor
-        this.load.json('hitbox', 'Scenes/Hitbox.json');
+        //  Load body shape from JSON file generated using the editor
+        this.load.json('hitbox', 'Scenes/hitbox.json');
         this.load.image("hourglass", 'Scenes/hourglass.png');
         this.load.image("sand", 'Scenes/sand.png');
   
     }
+
     create(){
         this.matter.world.setBounds(0, 0, 900, 700);
-        var shapes = this.cache.json.get('hitbox');
-        let my = this.my;//Optionally for organizing sprites
+        let my = this.my;   //Optionally for organizing sprites
+        let shapes = this.cache.json.get('hitbox');
         
         //this.matter.add.image(100, 100, 'glass', null, { shape: shape });
         const glass = this.add.container(400, 450);
@@ -27,10 +29,12 @@ class Gallery extends Phaser.Scene {
             {
     
                 my.g = this.matter.add.sprite(400, 0, 'sand').setAngle(20);
-                //my.g.setScale(3);
+                my.g.setCircle();
+                // my.g.setScale();
 
             }
     }
+
     update(){
     }
     
