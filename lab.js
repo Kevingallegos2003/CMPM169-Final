@@ -42,8 +42,15 @@ function setup() {
 let config = {
     parent: 'canvas-container',
     type: Phaser.CANVAS,
+    backgroundColor: '#1b1464',
     render: {
         pixelArt: false  // prevent pixel art from getting blurred when scaled
+    },
+    physics: {
+      default: 'matter',
+      matter: {
+        debug: true
+      },
     },
     width: 900,
     height: 700,
