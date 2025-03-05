@@ -2,7 +2,7 @@ class Gallery extends Phaser.Scene {
   constructor() {
     super("GalleryScene");
     this.my = { sprite: {} };
-    this.sandScale = .55;
+    this.sandScale = .69;
     this.canvas = game.canvas;
     this.canvasCenterX = this.canvas.width/2;
     this.canvasCenterY = this.canvas.height/2;
