@@ -2,6 +2,10 @@ class Gallery extends Phaser.Scene {
   constructor() {
     super("GalleryScene");
     this.my = { sprite: {} };
+    this.sandScale = .55;
+    this.canvas = game.canvas;
+    this.canvasCenterX = this.canvas.width/2;
+    this.canvasCenterY = this.canvas.height/2;
   }
 
   preload() {
@@ -20,28 +24,25 @@ class Gallery extends Phaser.Scene {
     let shapes = this.cache.json.get("hitbox");
 
     //this.matter.add.image(100, 100, 'glass', null, { shape: shape });
-    const glass = this.add.container(400, 450);
+    const glass = this.add.container(this.canvasCenterX, this.canvasCenterY);
 
     glass.add(this.add.sprite(0, 0, "hourglass"));
-    glass.setScale(0.5);
     this.matter.add.gameObject(glass, {
-      shape: shapes.hourglass,
-      isStatic: true,
+        shape: shapes.hourglass,
+        isStatic: true,
     });
+    glass.setScale(0.55);
+    // glass.y = 50;
     glass.setBounce(0.7);
 
-    // for (let i = 0; i < 5; i++)
-    // {
-    //         // for the prototype, lets consider just picing a random color/sprite from a list?
-
-    //         // this.genDownwardsSand('sand');
-    //         this.genUpwardsSand('sand');
-    // }
-
-    // I had to close the top
-    this.topBarrierTEMP = this.matter.add.rectangle(400, 240, 300, 20, {
+    // Close the top and bottom
+    // (doing it in the hourglass collision json breaks it?)
+    this.topBarrier = this.matter.add.rectangle(this.canvasCenterX, this.canvasCenterY-260, 380, 80, {
       isStatic: true,
     });
+    this.bottomBarrier = this.matter.add.rectangle(this.canvasCenterX, this.canvasCenterY+260, 380, 80, {
+        isStatic: true,
+      });
 
     // COLLISION HANDLER FOR TOP/BOTTOM SAND
     this.matter.world.on("collisionactive", (event) => {
@@ -102,46 +103,50 @@ class Gallery extends Phaser.Scene {
         if (sand.body) {
           this.matter.body.applyForce(sand.body, sand.body.position, {
             x: 0,
-            y: -0.0005,
+            y: -0.0003,
           });
         }
       });
     }
   }
 
-  genDownwardsSand(spriteImg) {
-    let x = Phaser.Math.Between(280, 520);
-    let y = 250;
-    let sand = this.matter.add.sprite(x, y, spriteImg);
+  genDownwardsSand(sandType) {
+    let x = Phaser.Math.Between(this.canvasCenterX-110, this.canvasCenterX+110);
+    let y = this.canvasCenterY-200;
+    let sand = this.matter.add.sprite(x, y, sandType.sprite);
+    sand.emotion = sandType.emotion;
 
     // Set physical properties
     sand.setCircle();
     sand.setFriction(0.1);
     sand.setBounce(0.2);
     sand.setIgnoreGravity(false);
+    sand.setScale(this.sandScale);
 
     // this is for collision detection
     sand.isDownSand = true;
 
     // Create a bottom sensor (only once, avoids duplicates)
     if (!this.bottomSensor) {
-      this.bottomSensor = this.matter.add.rectangle(400, 690, 300, 20, {
+      this.bottomSensor = this.matter.add.rectangle(this.canvasCenterX, this.canvasCenterY+210, 300, 20, {
         isStatic: true,
         isSensor: true,
       });
     }
   }
 
-  genUpwardsSand(spriteImg) {
-    let x = Phaser.Math.Between(280, 520);
-    let y = 690;
-    let sand = this.matter.add.sprite(x, y, spriteImg);
+  genUpwardsSand(sandType) {
+    let x = Phaser.Math.Between(this.canvasCenterX-110, this.canvasCenterX+110);
+    let y = this.canvasCenterY+200;
+    let sand = this.matter.add.sprite(x, y, sandType.sprite);
+    sand.emotion = sandType.emotion;
 
     // Set physical properties
     sand.setCircle();
     sand.setFriction(0.1);
     sand.setBounce(0.2);
     sand.setIgnoreGravity(true);
+    sand.setScale(this.sandScale);
 
     // collision detection
     sand.isUpSand = true;
@@ -154,7 +159,7 @@ class Gallery extends Phaser.Scene {
 
     // Create a top sensor (only once, avoids duplicates)
     if (!this.topSensor) {
-      this.topSensor = this.matter.add.rectangle(400, 250, 300, 20, {
+      this.topSensor = this.matter.add.rectangle(this.canvasCenterX, this.canvasCenterY-210, 300, 20, {
         isStatic: true,
         isSensor: true,
       });
@@ -163,7 +168,39 @@ class Gallery extends Phaser.Scene {
 
   // fun random color selector
   getRandomSandColor() {
-    const colors = ["redSand", "yellowSand", "blueSand"];
-    return colors[Math.floor(Math.random() * colors.length)];
+    const sandTypes = [ {sprite: "blueSand", emotion: 0}, {sprite: "yellowSand", emotion: 1}, {sprite: "redSand", emotion: 2}];
+    return sandTypes[Math.floor(Math.random() * sandTypes.length)];
+  }
+
+  // calculates which grain is changed into the other ones color
+  // im sure theres a cleaner way to do this im sorry yall its 5am and im sleepy
+  sandColorChange(sand1, sand2) {
+    if (sand1.emotion == 0) {           // sand1 = blue | sad
+        if (sand2.emotion == 1) {       // sand2 = yellow | happy
+            // sand1 wins
+            // console.log("sand1 turns to sand2");
+        } else if (sand2.emotion == 2) { // sand2 = red | angry
+            // sand2 wins
+            // console.log("sand2 turns to sand1");
+        }
+    } else
+    if (sand1.emotion == 1) {           // sand1 = yellow | happy
+        if (sand2.emotion == 2) {       // sand2 = red | angry
+            // sand1 wins
+            // console.log("sand1 turns to sand2");
+        } else if (sand2.emotion == 0) { // sand2 = blue | sad
+            // sand2 wins
+            // console.log("sand2 turns to sand1");
+        }
+    } else
+    if (sand1.emotion == 2) {           // sand1 = red | angry
+        if (sand2.emotion == 0) {       // sand2 = blue | sad
+            // sand1 wins
+            // console.log("sand1 turns to sand2");
+        } else if (sand2.emotion == 1) { // sand2 = yellow | happy
+            // sand2 wins
+            // console.log("sand2 turns to sand1");
+        }
+    }
   }
 }
