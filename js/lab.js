@@ -25,13 +25,13 @@ function resizeScreen() {
 function setup() {
   // place our canvas, making it fit our container
   canvasContainer = $("#canvas-container");
-  let canvas = createCanvas(canvasContainer.width(), 100);
-  canvas.parent("canvas-container");
-  // resize canvas if the page is resized
-  $(window).resize(function() {
-    resizeScreen();
-  });
-  resizeScreen();
+  // let canvas = createCanvas(canvasContainer.width(), 100);
+  // canvas.parent("canvas-container");
+  // // resize canvas if the page is resized
+  // $(window).resize(function() {
+  //   resizeScreen();
+  // });
+  // resizeScreen();
 
 
   lastFrame = performance.now(); // returned in milliseconds
@@ -49,7 +49,8 @@ let config = {
     physics: {
       default: 'matter',
       matter: {
-        debug: true
+        // debug: true
+        debug: false
       },
     },
     width: 900,
