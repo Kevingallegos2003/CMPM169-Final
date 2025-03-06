@@ -23,7 +23,7 @@ class Gallery extends Phaser.Scene {
     const glass = this.add.container(400, 450);
 
     glass.add(this.add.sprite(0, 0, "hourglass"));
-    glass.setScale(0.5);
+  
     this.matter.add.gameObject(glass, {
       shape: shapes.hourglass,
       isStatic: true,
@@ -42,7 +42,7 @@ class Gallery extends Phaser.Scene {
     this.topBarrierTEMP = this.matter.add.rectangle(400, 240, 300, 20, {
       isStatic: true,
     });
-
+    glass.setScale(0.5);
     // COLLISION HANDLER FOR TOP/BOTTOM SAND
     this.matter.world.on("collisionactive", (event) => {
       event.pairs.forEach((pair) => {
