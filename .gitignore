@@ -1,0 +1,6 @@
+# Firebase related ignores
+js/node_modules/
+.firebase/
+js/node_modules/functions/node_modules/
+js/node_modules/firestore-emulator/
+js/node_modules/firebase-debug.log

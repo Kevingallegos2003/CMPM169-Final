@@ -1,34 +1,22 @@
-import OpenAI from "openai";
-import { zodResponseFormat } from "openai/helpers/zod";
-import { z } from "zod";
+export const getEmotion = async (message) => {
+    const prompt = [
+        { "role": "system", "content": "You are an emotion analysis bot. Please return a single word that describes the emotion conveyed in the following message. Please choose from these words: Fear, Anger, Disgust, Sad, and Happy." },
+        { "role": "user", "content": message }
+    ];
 
-const openai = new OpenAI({
-});
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ` // Replace with your actual API key
+        },
+        body: JSON.stringify({
+            model: "gpt-4o-mini",
+            messages: prompt,
+        }),
+    });
 
-const Conversation = z.object({
-	responses: z.array(z.string())
-});
-
-let personality1 = "happy";
-let personality2 = "mad";
-
-// Send out the prompt to the OpenAI API Model
-const completion = openai.chat.completions.create({
-  model: "gpt-4o-mini",
-  store: true,
-  messages: [
-    {
-		"role": "user",
-		"content": [{ "type": "text", "text": `Start a conversation as someone who is feeling ${personality1} today` }]
-	},
-  ],
-  response_format: zodResponseFormat(Conversation, "conversation"),
-});
-
-let currentConversation = [];
-
-completion.then((result) => function () {
-	
-	currentConversation.Add(result.choices[0].message);
-	console.log(result[0].responses[0]);
-});
+    const data = await response.json();
+    const emotion = data.choices[0].message.content.trim();
+    return emotion;
+};

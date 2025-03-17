@@ -21,36 +21,53 @@
 	<!-- Link to javascript file - DEFER waits until all elements are rendered -->
 	<script src="./js/lab.js"></script>
 
-	<script src="./js/open-ai.js"></script>
+	<!-- FireBase API -->
+	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
 </head>
 <body>
-	<!-- Style this page by changing the CSS in ../css/site.css or css/lab.css -->
 	<main id="content">
-		<section>
-			<h1>Prototype</h1>
-			<div class="minor-section">
-					<h2>Challenge</h2>
-					<p>Restate the challenge of the lab here.</p>
+
+		<h2>received emotions</h2>
+
+		<!-- User Input Field -->
+		 <label for="user">Username:</label>
+		 <input type="text" id ="user" placeholder="Enter your username" />
+
+		<!-- Message Input Field -->
+		 <label for="message">Message:</label>
+		 <textarea id="message" placeholder="Type your message"></textarea>
+
+		<!-- Submit Button -->
+		 <button id="send-btn">Send Message</button>
+
+		<!-- Emotion Display -->
+		 <div id="emotion-container" class="hidden">
+			<p><strong>Emotion Detected:</strong> <span id="emotion"></span></p>
+		 </div>
+
+		<!-- Firebase message display -->
+		 <div id="messages-container">
+			<h3>Messages:</h3>
+			<div id="messages-list"></div>
+		 </div>
+
+		<section id="main-container">
+
+			<!-- Center Container for Phaser -->
+			<div id="phaser-container">
+				<!-- Phaser Game Will Be Rendered Here -->
 			</div>
 
-			<div class="minor-section">
-					<h2>Problems</h2>
-					<p>What problems arose? How did you solve them? </p>
-			</div>
-
-			<div class="minor-section">
-					<h2>Reflection</h2>
-					<p>Put your reflections about this assignment here. How did it go? What kind of energy did you put into the assignment? </p>
-			</div>
-
-			<div class="minor-section">
-					<h2>Results</h2>
-					<div id="output"></div>
-			</div>
 		</section>
-		<nav id="links">
-			<!-- Put links to other pages (including the homepage) here. -->
-		</nav>
+
+		<nav id="links"></nav>
 	</main>
+
+	
+	<script type="module" src="./js/open-ai.js"></script>
+	<script type="module" src="./js/firebase.js"></script>
+	<script type="module" src="./js/front-end.js"></script>
 </body>
 </html>
