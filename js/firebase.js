@@ -38,7 +38,6 @@ export const sendMessage = async (user, message) => {
 }
 
 export const receiveMessage = async () => {
-	
 	db.collection("cmpm169-final")
 		.orderBy("timestamp", "asc")
 		.onSnapshot((snapshot) => {
