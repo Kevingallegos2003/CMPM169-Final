@@ -1,7 +1,7 @@
 import { getEmotion } from './open-ai.js';
 
 const firebaseConfig = {
-	apiKey: "AIzaSyDlR7dG5HkvGRKxEspbIX4DJTMArdG4rlw",
+	apiKey: "",
 	authDomain: "cmpm169-final.firebaseapp.com",
 	projectId: "cmpm169-final",
 	storageBucket: "cmpm169-final.firebasestorage.app",
