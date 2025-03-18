@@ -1,6 +1,7 @@
 class Gallery extends Phaser.Scene {
   constructor() {
     super("GalleryScene");
+    //super({ key: 'GalleryScene' });
     this.my = { sprite: {} };
     this.sandScale = .69;
     this.canvas = game.canvas;
@@ -19,6 +20,9 @@ class Gallery extends Phaser.Scene {
   }
 
   create() {
+    this.events.on('buttonClicked', (data) => {
+      console.log(data.message);//grabs data from front-end.js
+    });
     this.matter.world.setBounds(0, 0, 900, 700);
     let my = this.my; //Optionally for organizing sprites
     let shapes = this.cache.json.get("hitbox");

@@ -24,7 +24,7 @@ function resizeScreen() {
 // setup() function is called once when the program starts
 function setup() {
   // place our canvas, making it fit our container
-  canvasContainer = $("#canvas-container");
+  canvasContainer = $("#phaser-container");
   // let canvas = createCanvas(canvasContainer.width(), 100);
   // canvas.parent("canvas-container");
   // // resize canvas if the page is resized
@@ -44,7 +44,7 @@ let config = {
     type: Phaser.CANVAS,
     backgroundColor: '#1b1464',
     render: {
-        pixelArt: false  // prevent pixel art from getting blurred when scaled
+        pixelArt: false  //
     },
     physics: {
       default: 'matter',

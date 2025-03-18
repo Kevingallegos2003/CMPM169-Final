@@ -36,6 +36,9 @@ const handleSendMessage = async () => {
     await sendMessage(user, message, emotion);
 
     messageInput.value = "";
+    console.log(game.scene.isActive('GalleryScene'));
+    const activeScene = game.scene.getScene('GalleryScene'); 
+    activeScene.events.emit('buttonClicked', { message: 'Hello from the button!' });//replace message with json, BOOM now u can pass message to phaser
   } catch (error) {
     console.error("Error:", error);
     alert("There was an error processing the message.");
