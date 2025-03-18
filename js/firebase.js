@@ -38,6 +38,7 @@ export const sendMessage = async (user, message) => {
 }
 
 export const receiveMessage = async () => {
+	
 	db.collection("cmpm169-final")
 		.orderBy("timestamp", "asc")
 		.onSnapshot((snapshot) => {
@@ -56,6 +57,7 @@ export const receiveMessage = async () => {
 const displayMessages = (messages) => {
 	const messagesContainer = document.getElementById("messages-container");
 	messagesContainer.innerHTML = "";
+	const activeScene = game.scene.getScene('GalleryScene'); 
 
 	messages.forEach((msg) => {
 		const messageDiv = document.createElement("div");
@@ -70,6 +72,7 @@ const displayMessages = (messages) => {
 		const messageBox = document.createElement("div");
 		messageBox.classList.add("single-message");
 		messageBox.innerHTML = `${msg.message} (${msg.emotion})`;
+    	activeScene.events.emit('displayedMessage', { message1: msg.emotion });
 		messageDiv.appendChild(messageBox);
 
 		messagesContainer.appendChild(messageDiv);

@@ -22,6 +22,15 @@ class Gallery extends Phaser.Scene {
   create() {
     this.events.on('buttonClicked', (data) => {
       console.log(data.message);//grabs data from front-end.js
+      if (data.message.toLowerCase() === "happy") {
+        this.genDownwardsSand({sprite: "blueSand", emotion: 0});
+      }
+      else if(data.message.toLowerCase() === "sad") {
+        this.genDownwardsSand({sprite: "yellowSand", emotion: 1});
+      }
+      else{
+        this.genDownwardsSand({sprite: "redSand", emotion: 2});
+      }
     });
     this.matter.world.setBounds(0, 0, 900, 700);
     let my = this.my; //Optionally for organizing sprites
@@ -48,6 +57,19 @@ class Gallery extends Phaser.Scene {
     this.bottomBarrier = this.matter.add.rectangle(this.canvasCenterX, this.canvasCenterY+260, 380, 80, {
         isStatic: true,
       });
+    this.events.on('displayedMessage', (data) => {
+      console.log(data.message1);//grabs data from firebase.js
+      if (data.message1.toLowerCase() === "happy") {
+        this.genUpwardsSand({sprite: "blueSand", emotion: 0});
+      }
+      else if(data.message1.toLowerCase() === "sad") {
+        this.genUpwardsSand({sprite: "yellowSand", emotion: 1});
+      }
+      else{
+        this.genUpwardsSand({sprite: "redSand", emotion: 2});
+      }
+      data.message1 = "";
+    });
 
     // COLLISION HANDLER FOR TOP/BOTTOM SAND
     this.matter.world.on("collisionactive", (event) => {
@@ -93,12 +115,12 @@ class Gallery extends Phaser.Scene {
 
   update() {
     // chance to make a sand fall down
-    if (Phaser.Math.Between(0, 100) < 5) {
+    if (Phaser.Math.Between(0, 1000) < 5) {
       this.genDownwardsSand(this.getRandomSandColor());
     }
 
     // chance to make a sand fall up
-    if (Phaser.Math.Between(0, 100) < 5) {
+    if (Phaser.Math.Between(0, 1000) < 5) {
       this.genUpwardsSand(this.getRandomSandColor());
     }
 
@@ -113,6 +135,7 @@ class Gallery extends Phaser.Scene {
         }
       });
     }
+
   }
 
   genDownwardsSand(sandType) {

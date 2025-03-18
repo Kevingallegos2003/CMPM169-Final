@@ -7,16 +7,19 @@ const userInput = document.getElementById("user");
 const messageInput = document.getElementById("message");
 const emotionContainer = document.getElementById("emotion-container");
 const emotionSpan = document.getElementById("emotion");
-const messagesContainer = document.getElementById("messages-list");
+const messagesContainer = document.getElementById("sent-messages-list");
+const sentmessages = [];
 
-// const displayMessages = (messages) => {
-//   messagesContainer.innerHTML = "";
-//   messages.forEach((msg) => {
-//     const messageDiv = document.createElement("div");
-//     messageDiv.textContent = `${msg.user}: ${msg.message} (Emotion: ${msg.emotion})`;
-//     messagesContainer.appendChild(messageDiv);
-//   });
-// };
+const displayMessages = (user, mes, emotion) => {
+  const textstring = `${user}: ${mes} (Emotion: ${emotion})`;
+  sentmessages.push(textstring);
+  messagesContainer.innerHTML = "";
+  sentmessages.forEach((msg) => {
+    const messageDiv = document.createElement("div");
+    messageDiv.textContent = msg;
+    messagesContainer.appendChild(messageDiv);
+  });
+};
 
 const handleSendMessage = async () => {
   const user = userInput.value.trim();
@@ -34,11 +37,12 @@ const handleSendMessage = async () => {
     emotionContainer.classList.remove("hidden");
 
     await sendMessage(user, message, emotion);
+    displayMessages(user, message, emotion);
 
     messageInput.value = "";
-    console.log(game.scene.isActive('GalleryScene'));
+    //console.log(game.scene.isActive('GalleryScene'));
     const activeScene = game.scene.getScene('GalleryScene'); 
-    activeScene.events.emit('buttonClicked', { message: 'Hello from the button!' });//replace message with json, BOOM now u can pass message to phaser
+    activeScene.events.emit('buttonClicked', { message: emotion });//BOOM now u can pass message to phaser
   } catch (error) {
     console.error("Error:", error);
     alert("There was an error processing the message.");
@@ -47,3 +51,4 @@ const handleSendMessage = async () => {
 
 sendButton.addEventListener("click", handleSendMessage);
 receiveMessage();
+
