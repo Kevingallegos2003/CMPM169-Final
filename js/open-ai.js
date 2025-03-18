@@ -1,6 +1,6 @@
 export const getEmotion = async (message) => {
     const prompt = [
-        { "role": "system", "content": "You are an emotion analysis bot. Please return a single word that describes the emotion conveyed in the following message. Please choose from these words: Fear, Anger, Disgust, Sad, and Happy." },
+        { "role": "system", "content": "You are an emotion analysis bot. Please return a single word that describes the emotion conveyed in the following message. Please choose from these words: Neutral, Fear, Anger, Disgust, Sad, and Happy." },
         { "role": "user", "content": message }
     ];
 

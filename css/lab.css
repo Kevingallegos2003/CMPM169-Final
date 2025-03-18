@@ -75,4 +75,50 @@
   #messages-list {
 	margin-top: 10px;
   }
+
+  #sent-messages-list {
+	margin-top: 10px;
+  }
+
+  .left-column, .right-column {
+    position: fixed;
+    top: 0;
+    width: 25vw;
+    height: 100vh;
+    background-color: lightgray;
+    padding: 10px;
+	overflow: auto;
+  }
+
+  .left-column {
+	left: 0; /* Sticks to the left */
+  }
+
+  .right-column {
+	right: 0; /* Sticks to the right */
+  }
+
+  .middle-content {
+	margin-left: 25vw;
+	margin-right: 25vw;
+  }
+
+  .username-message {
+    display: inline-block; /* Makes the box only as wide as the text */
+    background-color: rgb(255, 255, 255);
+	margin: .1%;
+	margin-top: 1vh;
+    padding: 5px 15px;
+    border-radius: 12px;
+    font-size: 16px;
+  }
+
+  .single-message {
+    display: inline-block;
+    background-color: rgb(235, 235, 235);
+	margin: .1%;
+    padding: 10px 15px;
+    border-radius: 30px;
+    font-size: 16px;
+  }
   

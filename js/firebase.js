@@ -37,7 +37,7 @@ export const sendMessage = async (user, message) => {
 
 }
 
-const receiveMessage = async () => {
+export const receiveMessage = async () => {
 	
 	db.collection("cmpm169-final")
 		.orderBy("timestamp", "asc")
@@ -60,7 +60,19 @@ const displayMessages = (messages) => {
 
 	messages.forEach((msg) => {
 		const messageDiv = document.createElement("div");
-		messageDiv.textContent = `${msg.user}: ${msg.message} (${msg.emotion})`;
+		
+		const nameDiv = document.createElement("div");
+		const usernameBox = document.createElement("div");
+		usernameBox.classList.add("username-message");
+		usernameBox.textContent = `${msg.user}` 
+		nameDiv.appendChild(usernameBox);
+		messageDiv.appendChild(nameDiv);
+
+		const messageBox = document.createElement("div");
+		messageBox.classList.add("single-message");
+		messageBox.innerHTML = `${msg.message} (${msg.emotion})`;
+		messageDiv.appendChild(messageBox);
+
 		messagesContainer.appendChild(messageDiv);
 	});
 }

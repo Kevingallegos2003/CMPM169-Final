@@ -1,5 +1,6 @@
 import { getEmotion } from './open-ai.js';
 import { sendMessage } from './firebase.js';
+import { receiveMessage } from './firebase.js';
 
 const sendButton = document.getElementById("send-btn");
 const userInput = document.getElementById("user");
@@ -8,14 +9,14 @@ const emotionContainer = document.getElementById("emotion-container");
 const emotionSpan = document.getElementById("emotion");
 const messagesContainer = document.getElementById("messages-list");
 
-const displayMessages = (messages) => {
-  messagesContainer.innerHTML = "";
-  messages.forEach((msg) => {
-    const messageDiv = document.createElement("div");
-    messageDiv.textContent = `${msg.user}: ${msg.message} (Emotion: ${msg.emotion})`;
-    messagesContainer.appendChild(messageDiv);
-  });
-};
+// const displayMessages = (messages) => {
+//   messagesContainer.innerHTML = "";
+//   messages.forEach((msg) => {
+//     const messageDiv = document.createElement("div");
+//     messageDiv.textContent = `${msg.user}: ${msg.message} (Emotion: ${msg.emotion})`;
+//     messagesContainer.appendChild(messageDiv);
+//   });
+// };
 
 const handleSendMessage = async () => {
   const user = userInput.value.trim();
@@ -42,3 +43,4 @@ const handleSendMessage = async () => {
 };
 
 sendButton.addEventListener("click", handleSendMessage);
+receiveMessage();

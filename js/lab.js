@@ -40,7 +40,7 @@ function setup() {
 }
 // game config
 let config = {
-    parent: 'canvas-container',
+    parent: 'phaser-container',
     type: Phaser.CANVAS,
     backgroundColor: '#1b1464',
     render: {

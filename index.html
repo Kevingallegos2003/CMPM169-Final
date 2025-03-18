@@ -29,39 +29,50 @@
 <body>
 	<main id="content">
 
-		<h2>received emotions</h2>
-
-		<!-- User Input Field -->
-		 <label for="user">Username:</label>
-		 <input type="text" id ="user" placeholder="Enter your username" />
-
-		<!-- Message Input Field -->
-		 <label for="message">Message:</label>
-		 <textarea id="message" placeholder="Type your message"></textarea>
-
-		<!-- Submit Button -->
-		 <button id="send-btn">Send Message</button>
-
-		<!-- Emotion Display -->
-		 <div id="emotion-container" class="hidden">
-			<p><strong>Emotion Detected:</strong> <span id="emotion"></span></p>
-		 </div>
-
-		<!-- Firebase message display -->
+		<!-- Message display -->
+		<div class="left-column">
 		 <div id="messages-container">
-			<h3>Messages:</h3>
-			<div id="messages-list"></div>
+			 <h3>Recieved Messages:</h3>
+			 <div id="messages-list"></div>
+		 </div>
+		</div>
+
+		 <div class="right-column">
+			<div id="sent-messages-container">
+				<h3>Sent Messages:</h3>
+				<div id="sent-messages-list"></div>
+			 </div>
 		 </div>
 
-		<section id="main-container">
+		<div class="middle-content">
+			<h2>received emotions</h2>
 
-			<!-- Center Container for Phaser -->
-			<div id="phaser-container">
-				<!-- Phaser Game Will Be Rendered Here -->
+			<!-- User Input Field -->
+			<label for="user">Username:</label>
+			<input type="text" id ="user" placeholder="Enter your username" />
+
+			<!-- Message Input Field -->
+			<label for="message">Message:</label>
+			<textarea id="message" placeholder="Type your message"></textarea>
+
+			<!-- Submit Button -->
+			<button id="send-btn">Send Message</button>
+
+			<!-- Emotion Display -->
+			<div id="emotion-container" class="hidden">
+				<p><strong>Emotion Detected:</strong> <span id="emotion"></span></p>
 			</div>
-
-		</section>
-
+			
+			<section id="main-container">
+				
+				<!-- Center Container for Phaser -->
+				<div id="phaser-container">
+					<!-- Phaser Game Will Be Rendered Here -->
+				</div>
+				
+			</section>
+		</div>
+			
 		<nav id="links"></nav>
 	</main>
 
