@@ -17,20 +17,34 @@ class Gallery extends Phaser.Scene {
     this.load.image("redSand", "Scenes/sandR.png");
     this.load.image("yellowSand", "Scenes/sandY.png");
     this.load.image("blueSand", "Scenes/sandB.png");
+    this.load.image("purpleSand", "Scenes/sandP.png");
+    this.load.image("greenSand", "Scenes/sandG.png");
+    this.load.image("neutralSand", "Scenes/sandN.png");
   }
 
   create() {
     this.events.on('buttonClicked', (data) => {
       console.log(data.message);//grabs data from front-end.js
-      if (data.message.toLowerCase() === "happy") {
-        this.genDownwardsSand({sprite: "blueSand", emotion: 0});
-      }
-      else if(data.message.toLowerCase() === "sad") {
-        this.genDownwardsSand({sprite: "yellowSand", emotion: 1});
-      }
-      else{
-        this.genDownwardsSand({sprite: "redSand", emotion: 2});
-      }
+      // Commenting this out because when a new message is put into the database it
+      // refreshes and calls the other function to generate sand already
+      // if (data.message.toLowerCase() === "happy") {
+      //   this.genDownwardsSand({sprite: "blueSand", emotion: 0});
+      // }
+      // else if(data.message.toLowerCase() === "sad") {
+      //   this.genDownwardsSand({sprite: "yellowSand", emotion: 1});
+      // }
+      // else if(data.message.toLowerCase() === "anger") {
+      //   this.genDownwardsSand({sprite: "redSand", emotion: 2});
+      // }
+      // else if(data.message.toLowerCase() === "fear") {
+      //   this.genDownwardsSand({sprite: "purpleSand", emotion: 3});
+      // }
+      // else if(data.message.toLowerCase() === "disgust") {
+      //   this.genDownwardsSand({sprite: "greenSand", emotion: 4});
+      // }
+      // else {
+      //   this.genDownwardsSand({sprite: "neutralSand", emotion: 5});
+      // }
     });
     this.matter.world.setBounds(0, 0, 900, 700);
     let my = this.my; //Optionally for organizing sprites
@@ -59,14 +73,23 @@ class Gallery extends Phaser.Scene {
       });
     this.events.on('displayedMessage', (data) => {
       console.log(data.message1);//grabs data from firebase.js
-      if (data.message1.toLowerCase() === "happy") {
+      if (data.message1.toLowerCase() === "sad") {
         this.genDownwardsSand({sprite: "blueSand", emotion: 0});
       }
-      else if(data.message1.toLowerCase() === "sad") {
+      else if(data.message1.toLowerCase() === "happy") {
         this.genDownwardsSand({sprite: "yellowSand", emotion: 1});
       }
-      else{
+      else if(data.message1.toLowerCase() === "anger") {
         this.genDownwardsSand({sprite: "redSand", emotion: 2});
+      }
+      else if(data.message1.toLowerCase() === "fear") {
+        this.genDownwardsSand({sprite: "purpleSand", emotion: 3});
+      }
+      else if(data.message1.toLowerCase() === "disgust") {
+        this.genDownwardsSand({sprite: "greenSand", emotion: 4});
+      }
+      else {
+        this.genDownwardsSand({sprite: "neutralSand", emotion: 5});
       }
       data.message1 = "";
     });
