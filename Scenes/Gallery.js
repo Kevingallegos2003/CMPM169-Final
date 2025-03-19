@@ -60,13 +60,13 @@ class Gallery extends Phaser.Scene {
     this.events.on('displayedMessage', (data) => {
       console.log(data.message1);//grabs data from firebase.js
       if (data.message1.toLowerCase() === "happy") {
-        this.genUpwardsSand({sprite: "blueSand", emotion: 0});
+        this.genDownwardsSand({sprite: "blueSand", emotion: 0});
       }
       else if(data.message1.toLowerCase() === "sad") {
-        this.genUpwardsSand({sprite: "yellowSand", emotion: 1});
+        this.genDownwardsSand({sprite: "yellowSand", emotion: 1});
       }
       else{
-        this.genUpwardsSand({sprite: "redSand", emotion: 2});
+        this.genDownwardsSand({sprite: "redSand", emotion: 2});
       }
       data.message1 = "";
     });
@@ -105,7 +105,7 @@ class Gallery extends Phaser.Scene {
         if (sandBody) {
           this.time.delayedCall(1000, () => {
             if (sandBody?.scene) {
-              sandBody.destroy();
+              //sandBody.destroy();
             }
           });
         }
@@ -116,12 +116,12 @@ class Gallery extends Phaser.Scene {
   update() {
     // chance to make a sand fall down
     if (Phaser.Math.Between(0, 1000) < 5) {
-      this.genDownwardsSand(this.getRandomSandColor());
+      //this.genDownwardsSand(this.getRandomSandColor());
     }
 
     // chance to make a sand fall up
     if (Phaser.Math.Between(0, 1000) < 5) {
-      this.genUpwardsSand(this.getRandomSandColor());
+      //this.genUpwardsSand(this.getRandomSandColor());
     }
 
     // this is to add force to the sand falling upward

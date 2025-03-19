@@ -8,7 +8,7 @@ export const getEmotion = async (message) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": ``
+            "Authorization": `` // Replace with your actual API key
         },
         body: JSON.stringify({
             model: "gpt-4o-mini",

@@ -37,6 +37,24 @@ export const sendMessage = async (user, message) => {
 
 }
 
+// Clear messages from Firebase
+export const clearMessages = async () => {
+    try {
+        const snapshot = await db.collection("cmpm169-final").get();
+
+        const batch = db.batch();
+        snapshot.forEach((doc) => {
+            batch.delete(doc.ref);
+        });
+
+        await batch.commit();
+        console.log("All messages cleared successfully!");
+
+    } catch (e) {
+        console.error("Error clearing messages:", e);
+    }
+};
+
 export const receiveMessage = async () => {
 	
 	db.collection("cmpm169-final")
@@ -45,7 +63,13 @@ export const receiveMessage = async () => {
 			const messages = [];
 			snapshot.forEach(doc => {
 				const data = doc.data();
+				data.id = doc.id; // Add Firestore's document ID directly
 				messages.push(data);
+
+				//Trigger clearMessages() when detecting special message
+                if (data.message === "This conversation is now over.") {
+                    clearMessages();
+                }
 			});
 
 			displayMessages(messages);
@@ -53,6 +77,9 @@ export const receiveMessage = async () => {
 			console.error("Error receiving messages:", error);
 		});
 }
+
+// Track messages that have already been emitted
+const processedMessages = new Set();
 
 const displayMessages = (messages) => {
 	const messagesContainer = document.getElementById("messages-container");
@@ -72,8 +99,14 @@ const displayMessages = (messages) => {
 		const messageBox = document.createElement("div");
 		messageBox.classList.add("single-message");
 		messageBox.innerHTML = `${msg.message} (${msg.emotion})`;
-    	activeScene.events.emit('displayedMessage', { message1: msg.emotion });
+    	//activeScene.events.emit('displayedMessage', { message1: msg.emotion });
 		messageDiv.appendChild(messageBox);
+
+		// Emit event only if this message hasn't been processed yet
+        if (!processedMessages.has(msg.id)) {
+            activeScene.events.emit('displayedMessage', { message1: msg.emotion });
+            processedMessages.add(msg.id); // Mark message as processed
+        }
 
 		messagesContainer.appendChild(messageDiv);
 	});
