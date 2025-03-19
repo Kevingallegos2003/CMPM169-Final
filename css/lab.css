@@ -105,22 +105,25 @@
 
   .username-message {
     display: inline-block; /* Makes the box only as wide as the text */
-    background-color: rgb(255, 255, 255);
-	margin: .1%;
-	margin-top: 1vh;
+    background-color: rgb(245, 245, 245);
+	  margin: .1%;
+	  margin-top: 1vh;
     padding: 5px 15px;
     border-radius: 12px;
     font-size: 16px;
+    font-weight: bold;
   }
 
   .single-message {
     display: inline-block;
-    background-color: rgb(235, 235, 235);
-	margin: .1%;
+    background-color: rgb(245, 245, 245);
+	  margin: .1%;
     padding: 10px 15px;
     border-radius: 30px;
     font-size: 16px;
+    font-weight: bold;
   }
+
   #phaser-container {
     display: flex;
     justify-content: center;

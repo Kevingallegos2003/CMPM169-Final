@@ -98,7 +98,32 @@ const displayMessages = (messages) => {
 
 		const messageBox = document.createElement("div");
 		messageBox.classList.add("single-message");
-		messageBox.innerHTML = `${msg.message} (${msg.emotion})`;
+		messageBox.innerHTML = `${msg.message}`;
+
+		if (msg.emotion.toLowerCase() === "sad") {
+			messageBox.style.backgroundColor = "#82c0f3";
+			usernameBox.style.backgroundColor = "#82c0f3";
+		  }
+		  else if(msg.emotion.toLowerCase() === "happy") {
+			messageBox.style.backgroundColor = "#f3e282";
+			usernameBox.style.backgroundColor = "#f3e282";
+		  }
+		  else if(msg.emotion.toLowerCase() === "anger") {
+			messageBox.style.backgroundColor = "#f38282";
+			usernameBox.style.backgroundColor = "#f38282";
+		  }
+		  else if(msg.emotion.toLowerCase() === "fear") {
+			messageBox.style.backgroundColor = "#e482f3";
+			usernameBox.style.backgroundColor = "#e482f3";
+		  }
+		  else if(msg.emotion.toLowerCase() === "disgust") {
+			messageBox.style.backgroundColor = "#82f388";
+			usernameBox.style.backgroundColor = "#82f388";
+		  }
+		  else {
+			// use default color gray
+		  }
+
     	//activeScene.events.emit('displayedMessage', { message1: msg.emotion });
 		messageDiv.appendChild(messageBox);
 
