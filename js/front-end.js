@@ -59,6 +59,6 @@ const handleSendMessage = async () => {
 	};
 	
 	sendButton.addEventListener("click", handleSendMessage);
-	receiveMessage(); // Continue receiving messages as before
+	receiveMessage();
 	
 

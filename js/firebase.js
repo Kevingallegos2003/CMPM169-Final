@@ -1,12 +1,3 @@
-const firebaseConfig = {
-	apiKey: "",
-	authDomain: "cmpm169-final.firebaseapp.com",
-	projectId: "cmpm169-final",
-	storageBucket: "cmpm169-final.firebasestorage.app",
-	messagingSenderId: "900631031086",
-	appId: "1:900631031086:web:3ea41379ebc3ced6cb5ebf"
-	};
-
 const initializeFirebase = (firebaseApiKey) => {
 	const firebaseConfig = {
 		apiKey: firebaseApiKey,	// Use the API key sent from the Cloudflare Worker
@@ -22,11 +13,12 @@ const initializeFirebase = (firebaseApiKey) => {
 }
 
 let firebaseApiKey;
+let db;
 // Send message to Firebase
 export const sendMessage = async (user, message) => {
 		try {
 				// Call Cloudflare Worker for emotion analysis
-				const response = await fetch("cmpm169-worker.valdenornathan.workers.dev", { 
+				const response = await fetch("https://cmpm169-worker.valdenornathan.workers.dev", { 
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify({ message })
@@ -36,7 +28,6 @@ export const sendMessage = async (user, message) => {
 				firebaseApiKey = data.firebaseApiKey;
 				const emotion = data.emotion; // Get emotion response from Cloudflare Worker
 
-				const db = initializeFirebase(firebaseApiKey);
 				// Store message + emotion in Firestore
 				await db.collection("cmpm169-final").add({
 						user: user,
@@ -73,7 +64,8 @@ export const clearMessages = async () => {
 
 export const receiveMessage = async () => {
 	
-	const db = initializeFirebase(firebaseApiKey);
+	console.log("receiving works bruh");
+	db = initializeFirebase(firebaseApiKey);
 	db.collection("cmpm169-final")
 		.orderBy("timestamp", "asc")
 		.onSnapshot((snapshot) => {
